@@ -1,15 +1,15 @@
 %% 4th April - Composing Shapes III
 % Choose parameters
-Lambda = 0.0000001;
-N = 5000;
-Dim = 2;
-Option = 2;
-p1 = 40;
-Weight_Option = 1;
-Sparseness = 0.5;
-Num = 1;
-Dimensions = [1,2,3,10,50,100,200,400,600,1000];%,2000];
-Thresh_Option = 2;
+Lambda = 0.0000001; % Regularises the weights
+N = 5000; % Number of datapoints
+Dim = 2; % Dimensionality of inputs space (plots only work for 2 and 3D, better in 2)
+Option = 2; % The choice of how to create the input data, see CreateDistribution for details
+p1 = 40; % An input parameter for creating data, see CreateDistribution for details
+Weight_Option = 1; % We use a few different ways to create the random weights, this chooses between them
+Sparseness = 0.5; % Sparseness of 'cortical' represetation
+Num = 1; % number of iterations to try at each expansive level (different random weight matrices but same input)
+Dimensions = [1,2,3,10,50,100,200,400,600,1000];%,2000]; % The dimensions of expansion to choose
+Thresh_Option = 2; % There are a few ways to apply threshold, this chooses between them, see Threshold for details
 
 % Setup data
 [Data, Labels, N]  = CreateDistribution(N, Option, Dim, p1,0,0);
