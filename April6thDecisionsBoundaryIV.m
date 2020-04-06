@@ -1,4 +1,4 @@
-%% 4th April - Composing Shapes III
+%% 4th April - Composing Shapes IV
 % Choose parameters
 Lambda = 0.0000001; % Regularises the weights
 N = 5000; % Number of datapoints
@@ -6,10 +6,11 @@ Dim = 2; % Dimensionality of inputs space (plots only work for 2 and 3D, better 
 Option = 2; % The choice of how to create the input data, see CreateDistribution for details
 p1 = 40; % An input parameter for creating data, see CreateDistribution for details
 Weight_Option = 1; % We use a few different ways to create the random weights, this chooses between them
-Sparseness = 0.5; % Sparseness of 'cortical' represetation
-Num = 1; % number of iterations to try at each expansive level (different random weight matrices but same input)
-Dimensions = [1,2,3,10,50,100,200,400,600,1000];%,2000]; % The dimensions of expansion to choose
+Sparseness = 0.15; % Sparseness of 'cortical' represetation
+Num = 10; % number of iterations to try at each expansive level (different random weight matrices but same input)
+Dimensions = [1,2,3,10,50,100,200,400,600,1000,2000]; % The dimensions of expansion to choose
 Thresh_Option = 2; % There are a few ways to apply threshold, this chooses between them, see Threshold for details
+Alpha_1 = 10; % The constant in a sigmoid function
 
 % Setup data
 [Data, Labels, N]  = CreateDistribution(N, Option, Dim, p1,0,0);
@@ -24,7 +25,7 @@ Accuracy_Basic = sum(Assignments_Basic == Labels)/N;
 Accuracy_Proj = zeros(length(Dimensions), Num);
 maxacc = 0;
 for k = 1:Num
-    disp(['Num = ', num2str(k)])
+    disp(['Num = ', num2str(k),'/',num2str(Num)])
     for j = 1:length(Dimensions)
         Dim_Proj = Dimensions(j);
         %disp(['Dimension = ',num2str(Dim)])
@@ -37,7 +38,7 @@ for k = 1:Num
             J = 2*(randn([Dim_Proj,Dim]) - repmat(0.5,[Dim_Proj,Dim]));
         end
         
-        ProjData = [Threshold(J*Data,0,Sparseness,Thresh_Option); ones(1,N)];
+        ProjData = [Threshold(J*Data,0,Sparseness,Thresh_Option, Alpha_1); ones(1,N)];
         
         Weights_Proj = PerceptronWeights(ProjData',Labels', 2, Lambda);
         Assignments = sign(Weights_Proj'*ProjData);

@@ -52,7 +52,8 @@ title('Accuracy vs Dimensionality')
 xlabel('Dimension')
 ylabel('Accuracy')
 plot([min(Dimensions), max(Dimensions)], [Accuracy_Basic, Accuracy_Basic], 'DisplayName', 'Linear Decoder')
-plot([Dim*50, Dim*50], [0.5,1])
+plot([Dim*50, Dim*50], [0.5,1], 'DisplayName', 'Fly-like 50 fold expansion')
+legend
 
 subplot(2,3,4)
 if Dim == 2
